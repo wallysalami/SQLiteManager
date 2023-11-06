@@ -28,7 +28,7 @@ private:
 #endif // _SQLiteDatabaseManager_h
 
 template <typename... Args>
-inline JSONVar DatabaseConnection::execute(const String &query, Args... args)
+JSONVar DatabaseConnection::execute(const String &query, Args... args)
 {
 	std::lock_guard<std::mutex> lock(_mutex);
 	SQLiteStatement stmt(_db, query);

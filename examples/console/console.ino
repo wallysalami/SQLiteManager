@@ -1,4 +1,4 @@
-#include "src/DatabaseConnection.h"
+#include <DatabaseConnection.h>
 #include <SD.h>
 
 DatabaseConnection db;

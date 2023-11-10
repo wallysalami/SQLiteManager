@@ -11,7 +11,12 @@ public:
 	SQLiteStatement(sqlite3 *db, const String &query);
 	~SQLiteStatement();
 	template <typename T, typename... Args>
-	void bind(T first, Args... rest);
+	void bind(T first, Args... rest)
+	{
+		bind(first);
+		bind(rest...);
+	}
+
 	JSONVar evaluate();
 
 	friend class DatabaseConnection;
@@ -28,10 +33,3 @@ private:
 };
 
 #endif // _SQLiteStatement_h
-
-template <typename T, typename... Args>
-void SQLiteStatement::bind(T first, Args... rest)
-{
-	bind(first);
-	bind(rest...);
-}

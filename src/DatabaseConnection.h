@@ -16,7 +16,13 @@ public:
 	void open(const String &path);
 	void close();
 	template <typename... Args>
-	JSONVar execute(const String &query, Args... args);
+	JSONVar execute(const String &query, Args... args)
+	{
+		std::lock_guard<std::mutex> lock(_mutex);
+		SQLiteStatement stmt(_db, query);
+		stmt.bind(args...);
+		return stmt.evaluate();
+	}
 
 	friend class SQLiteStatement;
 
@@ -26,12 +32,3 @@ private:
 };
 
 #endif // _SQLiteDatabaseManager_h
-
-template <typename... Args>
-JSONVar DatabaseConnection::execute(const String &query, Args... args)
-{
-	std::lock_guard<std::mutex> lock(_mutex);
-	SQLiteStatement stmt(_db, query);
-	stmt.bind(args...);
-	return stmt.evaluate();
-}

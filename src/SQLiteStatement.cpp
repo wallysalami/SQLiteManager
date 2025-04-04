@@ -25,6 +25,10 @@ JsonDocument SQLiteStatement::getRowData()
 			rowData[String(colName)] = String(reinterpret_cast<const char *>(sqlite3_column_text(_stmt, col)));
 			break;
 
+		case SQLITE_FLOAT:
+			rowData[String(colName)] = sqlite3_column_double(_stmt, col);
+			break;
+
 		default:
 			throw std::runtime_error("cannot handle type");
 		}
@@ -43,6 +47,32 @@ void SQLiteStatement::bind() {}
 void SQLiteStatement::bind(int arg)
 {
 	int result = sqlite3_bind_int(_stmt, ++_paramCounter, arg);
+
+	if (result != SQLITE_OK)
+		throw std::runtime_error(sqlite3_errmsg(_db));
+}
+
+void SQLiteStatement::bind(long arg)
+{
+	sqlite_int64 arg64 = arg; 
+	int result = sqlite3_bind_int64(_stmt, ++_paramCounter, arg64);
+	
+	if (result != SQLITE_OK)
+		throw std::runtime_error(sqlite3_errmsg(_db));
+}
+
+void SQLiteStatement::bind(long long arg)
+{
+	sqlite_int64 arg64 = arg; 
+	int result = sqlite3_bind_int64(_stmt, ++_paramCounter, arg64);
+	
+	if (result != SQLITE_OK)
+		throw std::runtime_error(sqlite3_errmsg(_db));
+}
+
+void SQLiteStatement::bind(double arg)
+{
+	int result = sqlite3_bind_double(_stmt, ++_paramCounter, arg);
 
 	if (result != SQLITE_OK)
 		throw std::runtime_error(sqlite3_errmsg(_db));

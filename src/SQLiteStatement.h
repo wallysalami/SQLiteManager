@@ -28,6 +28,9 @@ private:
 
 	void bind();
 	void bind(int i);
+	void bind(long i);
+	void bind(long long i);
+	void bind(double i);
 	void bind(const String &str);
 	JsonDocument getRowData();
 };

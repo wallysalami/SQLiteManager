@@ -1,7 +1,7 @@
 #if !defined(_SQLiteStatement_h)
 #define _SQLiteStatement_h
 
-#include <Arduino_JSON.h>
+#include <ArduinoJson.h>
 #include <Arduino.h>
 #include <sqlite3.h>
 
@@ -17,7 +17,7 @@ public:
 		bind(rest...);
 	}
 
-	JSONVar evaluate();
+	JsonDocument evaluate();
 
 	friend class DatabaseConnection;
 
@@ -29,7 +29,7 @@ private:
 	void bind();
 	void bind(int i);
 	void bind(const String &str);
-	JSONVar getRowData();
+	JsonDocument getRowData();
 };
 
 #endif // _SQLiteStatement_h

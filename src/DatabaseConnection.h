@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <sqlite3.h>
-#include <Arduino_JSON.h>
+#include <ArduinoJson.h>
 #include "SQLiteStatement.h"
 #include <mutex>
 
@@ -16,7 +16,7 @@ public:
 	void open(const String &path);
 	void close();
 	template <typename... Args>
-	JSONVar execute(const String &query, Args... args)
+	JsonDocument execute(const String &query, Args... args)
 	{
 		std::lock_guard<std::mutex> lock(_mutex);
 		SQLiteStatement stmt(_db, query);

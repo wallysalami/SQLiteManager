@@ -8,9 +8,9 @@ SQLiteStatement::SQLiteStatement(sqlite3 *db, const String &query) : _db(db)
 		throw std::runtime_error(sqlite3_errmsg(_db));
 }
 
-JSONVar SQLiteStatement::getRowData()
+JsonDocument SQLiteStatement::getRowData()
 {
-	JSONVar rowData;
+	JsonDocument rowData;
 
 	for (size_t col = 0, colNumber = sqlite3_column_count(_stmt); col < colNumber; ++col)
 	{
@@ -18,11 +18,11 @@ JSONVar SQLiteStatement::getRowData()
 		switch (sqlite3_column_type(_stmt, col))
 		{
 		case SQLITE_INTEGER:
-			rowData[colName] = sqlite3_column_int(_stmt, col);
+			rowData[String(colName)] = sqlite3_column_int(_stmt, col);
 			break;
 
 		case SQLITE_TEXT:
-			rowData[colName] = reinterpret_cast<const char *>(sqlite3_column_text(_stmt, col));
+			rowData[String(colName)] = String(reinterpret_cast<const char *>(sqlite3_column_text(_stmt, col)));
 			break;
 
 		default:
@@ -56,14 +56,14 @@ void SQLiteStatement::bind(const String &arg)
 		throw std::runtime_error(sqlite3_errmsg(_db));
 }
 
-JSONVar SQLiteStatement::evaluate()
+JsonDocument SQLiteStatement::evaluate()
 {
-	JSONVar result;
+	JsonDocument result;
 
 	int stepResult;
 	for (size_t index = 0; (stepResult = sqlite3_step(_stmt)) == SQLITE_ROW; ++index)
 	{
-		JSONVar rowResult = getRowData();
+		JsonDocument rowResult = getRowData();
 		result[index] = rowResult;
 	}
 

@@ -30,7 +30,7 @@ JsonDocument SQLiteStatement::getRowData()
 			break;
 
 		default:
-			throw std::runtime_error("cannot handle type");
+			break;
 		}
 	}
 

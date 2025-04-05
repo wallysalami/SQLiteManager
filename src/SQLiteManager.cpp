@@ -1,11 +1,11 @@
-#include "DatabaseConnection.h"
+#include "SQLiteManager.h"
 
-DatabaseConnection::~DatabaseConnection()
+SQLiteManager::~SQLiteManager()
 {
 	close();
 }
 
-void DatabaseConnection::open(const String &path)
+void SQLiteManager::open(const String &path)
 {
 	int result = sqlite3_open(path.c_str(), &_db);
 
@@ -13,7 +13,7 @@ void DatabaseConnection::open(const String &path)
 		throw std::runtime_error(sqlite3_errmsg(_db));
 }
 
-void DatabaseConnection::close()
+void SQLiteManager::close()
 {
 	int result = sqlite3_close(_db);
 

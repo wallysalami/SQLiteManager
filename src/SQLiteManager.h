@@ -1,5 +1,4 @@
-#if !defined(_SQLiteDatabaseManager_h)
-#define _SQLiteDatabaseManager_h
+#pragma once
 
 #include <Arduino.h>
 #include <sqlite3.h>
@@ -7,11 +6,11 @@
 #include "SQLiteStatement.h"
 #include <mutex>
 
-class DatabaseConnection
+class SQLiteManager
 {
 public:
-	DatabaseConnection() = default;
-	~DatabaseConnection();
+	SQLiteManager() = default;
+	~SQLiteManager();
 
 	void open(const String &path);
 	void close();
@@ -30,5 +29,3 @@ private:
 	sqlite3 *_db;
 	std::mutex _mutex;
 };
-
-#endif // _SQLiteDatabaseManager_h

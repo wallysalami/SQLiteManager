@@ -1,5 +1,4 @@
-#if !defined(_SQLiteStatement_h)
-#define _SQLiteStatement_h
+#pragma once
 
 #include <ArduinoJson.h>
 #include <Arduino.h>
@@ -34,5 +33,3 @@ private:
 	void bind(const String &str);
 	JsonDocument getRowData();
 };
-
-#endif // _SQLiteStatement_h

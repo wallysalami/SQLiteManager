@@ -18,7 +18,7 @@ public:
 
 	JsonDocument evaluate();
 
-	friend class DatabaseConnection;
+	friend class SQLiteManager;
 
 private:
 	sqlite3_stmt *_stmt;

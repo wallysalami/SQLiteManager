@@ -26,10 +26,19 @@ private:
 	uint32_t _paramCounter = 0;
 
 	void bind();
+	void bind(char i);
+	void bind(unsigned char i);
+	void bind(short i);
+	void bind(unsigned short i);
 	void bind(int i);
+	void bind(unsigned int i);
 	void bind(long i);
+	void bind(unsigned long i);
 	void bind(long long i);
+	void bind(unsigned long long i);
+	void bind(float i);
 	void bind(double i);
 	void bind(const String &str);
+	void bind(const char *str);
 	JsonDocument getRowData();
 };

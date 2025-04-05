@@ -44,6 +44,26 @@ SQLiteStatement::~SQLiteStatement()
 
 void SQLiteStatement::bind() {}
 
+void SQLiteStatement::bind(char arg)
+{
+	bind((int) arg);
+}
+
+void SQLiteStatement::bind(unsigned char arg)
+{
+	bind((int) arg);
+}
+
+void SQLiteStatement::bind(short arg)
+{
+	bind((int) arg);
+}
+
+void SQLiteStatement::bind(unsigned short arg)
+{
+	bind((int) arg);
+}
+
 void SQLiteStatement::bind(int arg)
 {
 	int result = sqlite3_bind_int(_stmt, ++_paramCounter, arg);
@@ -52,13 +72,19 @@ void SQLiteStatement::bind(int arg)
 		throw std::runtime_error(sqlite3_errmsg(_db));
 }
 
+void SQLiteStatement::bind(unsigned int arg)
+{
+	bind((long long) arg);
+}
+
 void SQLiteStatement::bind(long arg)
 {
-	sqlite_int64 arg64 = arg; 
-	int result = sqlite3_bind_int64(_stmt, ++_paramCounter, arg64);
-	
-	if (result != SQLITE_OK)
-		throw std::runtime_error(sqlite3_errmsg(_db));
+	bind((long long) arg);
+}
+
+void SQLiteStatement::bind(unsigned long arg)
+{
+	bind((long long) arg);
 }
 
 void SQLiteStatement::bind(long long arg)
@@ -68,6 +94,16 @@ void SQLiteStatement::bind(long long arg)
 	
 	if (result != SQLITE_OK)
 		throw std::runtime_error(sqlite3_errmsg(_db));
+}
+
+void SQLiteStatement::bind(unsigned long long arg)
+{
+	bind((long long) arg);
+}
+
+void SQLiteStatement::bind(float arg)
+{
+	bind((double) arg);
 }
 
 void SQLiteStatement::bind(double arg)
@@ -80,7 +116,12 @@ void SQLiteStatement::bind(double arg)
 
 void SQLiteStatement::bind(const String &arg)
 {
-	int result = sqlite3_bind_text(_stmt, ++_paramCounter, arg.c_str(), -1, SQLITE_TRANSIENT);
+	bind(arg.c_str());
+}
+
+void SQLiteStatement::bind(const char* arg)
+{
+	int result = sqlite3_bind_text(_stmt, ++_paramCounter, arg, -1, SQLITE_TRANSIENT);
 
 	if (result != SQLITE_OK)
 		throw std::runtime_error(sqlite3_errmsg(_db));

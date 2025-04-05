@@ -1,7 +1,7 @@
-#include <DatabaseConnection.h>
+#include <SQLiteManager.h>
 #include <SD.h>
 
-DatabaseConnection db;
+SQLiteManager db;
 
 void setup()
 {
@@ -45,8 +45,8 @@ void loop()
 		while (!Serial.available())
 			;
 		String query = Serial.readString();
-		JSONVar result = db.execute(query);
-		Serial.println(result);
+		JSONDocument result = db.execute(query);
+		serialzeJson(result, Serial);
 	}
 	catch (const std::exception &e)
 	{

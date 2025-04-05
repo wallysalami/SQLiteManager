@@ -45,8 +45,8 @@ void loop()
 		while (!Serial.available())
 			;
 		String query = Serial.readString();
-		JSONDocument result = db.execute(query);
-		serialzeJson(result, Serial);
+		JsonDocument result = db.execute(query);
+		serializeJson(result, Serial);
 	}
 	catch (const std::exception &e)
 	{

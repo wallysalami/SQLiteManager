@@ -18,7 +18,7 @@ JsonDocument SQLiteStatement::getRowData()
 		switch (sqlite3_column_type(_stmt, col))
 		{
 		case SQLITE_INTEGER:
-			rowData[String(colName)] = sqlite3_column_int(_stmt, col);
+			rowData[String(colName)] = sqlite3_column_int64(_stmt, col);
 			break;
 
 		case SQLITE_TEXT:
